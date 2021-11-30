@@ -4,7 +4,7 @@
   width: 100%;
   height: 100vh;
   text-align: center;
-  padding: 10rem;
+  padding: 2rem 5rem;
 }
 
 .login-form{
@@ -14,5 +14,10 @@
 
 .sign-up-form{
   max-width: 500px;
+  margin: auto;
+}
+
+.user-list{
+  max-width: 800px;
   margin: auto;
 }
