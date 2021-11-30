@@ -1,10 +1,10 @@
 import './App.css';
-import FormComp from './components/FormComp';
+import AppRouter from './router/AppRouter';
 
 function App() {
     return (
         <div className="App">
-            <FormComp />
+            <AppRouter />
         </div>
     );
 }
