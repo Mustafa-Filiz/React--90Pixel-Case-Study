@@ -17,7 +17,11 @@ export const userSlice = createSlice({
         isLoading: false,
         error: '',
     },
-    reducers: {},
+    reducers: {
+        userLogin: (state, action) => {
+            state.currentUser = action.payload;
+        },
+    },
     extraReducers: {
         [fetchUsersAsync.pending]: (state) => {
             state.isLoading = true;
@@ -32,5 +36,10 @@ export const userSlice = createSlice({
         },
     },
 });
+
+export const usersSelector = (state) => state.users.users;
+export const currentUserSelector = (state) => state.users.currentUser;
+
+export const { userLogin } = userSlice.actions;
 
 export default userSlice.reducer;
