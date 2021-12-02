@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Avatar } from 'antd';
+import { List, Avatar, Button } from 'antd';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ function Users() {
                     <List.Item
                         actions={[
                             <Link to={`${user.id}`}>more</Link>,
-                            <Link to="#">delete</Link>,
+                            <Button type="text" danger>delete</Button>,
                         ]}
                     >
                         <List.Item.Meta
