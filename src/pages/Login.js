@@ -18,7 +18,7 @@ function Login() {
         const { email, password } = values;
         const user = users.find((user) => email === user.email.toLowerCase());
         // console.log(user)
-        if (user.id) {
+        if (user) {
             if (
                 user.email.toLowerCase() === email &&
                 user.password === password
