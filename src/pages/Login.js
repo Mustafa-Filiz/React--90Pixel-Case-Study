@@ -3,21 +3,37 @@ import { Form, Input, Button } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUsersAsync, userLogin } from '../redux/userSlice';
+import { fetchUsersAsync, userLogin, usersSelector } from '../redux/userSlice';
 
 function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const users = useSelector((state) => state.users.users);
+    const users = useSelector(usersSelector);
 
     useEffect(() => {
         dispatch(fetchUsersAsync());
     }, [dispatch]);
 
     const onFinish = (values) => {
-        dispatch(userLogin(values));
-        navigate('users');
+        const { email, password } = values;
+        const user = users.find((user) => email === user.email.toLowerCase());
+        // console.log(user)
+        if (user.id) {
+            if (
+                user.email.toLowerCase() === email &&
+                user.password === password
+            ) {
+                dispatch(userLogin(user));
+                navigate('users');
+            } else {
+                alert('Wrong email or password.');
+            }
+        } else {
+            alert("User couldn't find.");
+        }
     };
+
+    console.log(users);
 
     return (
         <div>
