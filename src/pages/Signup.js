@@ -1,16 +1,20 @@
 import React from 'react';
 import { Form, Input, Checkbox, Button } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import axios from 'axios';
+import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { userLogin } from '../redux/userSlice';
 
 const formItemLayout = {
     wrapperCol: {
         xs: {
             span: 24,
-			offset: 0,
+            offset: 0,
         },
         sm: {
             span: 16,
-			offset: 4,
+            offset: 4,
         },
     },
 };
@@ -29,19 +33,28 @@ const tailFormItemLayout = {
 
 function Signup() {
     const [form] = Form.useForm();
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+        const { email, password } = values;
+        const user = { email, password };
+        // console.log('Received values of form: ', values);
+        axios.post(process.env.REACT_APP_USERS_API_URL, user);
+        dispatch(userLogin(user));
+        navigate('/users');
     };
     return (
         <div>
-			<h1>Sign Up</h1>
+            <h1>Sign Up</h1>
             <Form
                 {...formItemLayout}
                 form={form}
                 name="register"
                 onFinish={onFinish}
                 scrollToFirstError
-				className="sign-up-form"
+                className="sign-up-form"
                 size="large"
             >
                 <Form.Item
@@ -70,7 +83,10 @@ function Signup() {
                     ]}
                     hasFeedback
                 >
-                    <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+                    <Input.Password
+                        prefix={<LockOutlined />}
+                        placeholder="Password"
+                    />
                 </Form.Item>
 
                 <Form.Item
@@ -100,7 +116,10 @@ function Signup() {
                         }),
                     ]}
                 >
-                    <Input.Password  prefix={<LockOutlined />} placeholder="Confirm Password" />
+                    <Input.Password
+                        prefix={<LockOutlined />}
+                        placeholder="Confirm Password"
+                    />
                 </Form.Item>
                 <Form.Item
                     {...tailFormItemLayout}
