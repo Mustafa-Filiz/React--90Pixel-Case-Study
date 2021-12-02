@@ -21,3 +21,8 @@
   max-width: 800px;
   margin: auto;
 }
+
+.logout-button{
+  display: flex;
+  justify-content: flex-end;
+}
