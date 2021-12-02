@@ -1,23 +1,46 @@
 import React from 'react';
 import { List, Avatar, Button } from 'antd';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+    currentUserSelector,
+    userLogout,
+    usersSelector,
+} from '../redux/userSlice';
 
 function Users() {
-    const users = useSelector((state) => state.users.users);
+    const users = useSelector(usersSelector);
+    const currentUser = useSelector(currentUserSelector);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const displayedUsers = users.filter((user) => user.id !== currentUser.id);
+
+    const handleLogout = () => {
+        dispatch(userLogout());
+        navigate('/');
+    };
 
     return (
         <div>
-			<h1>User List</h1>
+            <div className="logout-button">
+                <h3 style={{ marginRight: 20 }}>Welcome {currentUser.name}</h3>
+                <Button type="primary" onClick={handleLogout}>
+                    Logout
+                </Button>
+            </div>
+            <h1>User List</h1>
             <List
                 className="user-list"
                 itemLayout="horizontal"
-                dataSource={users}
+                dataSource={displayedUsers}
                 renderItem={(user) => (
                     <List.Item
                         actions={[
                             <Link to={`${user.id}`}>more</Link>,
-                            <Button type="text" danger>delete</Button>,
+                            <Button type="text" danger>
+                                delete
+                            </Button>,
                         ]}
                     >
                         <List.Item.Meta
