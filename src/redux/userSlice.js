@@ -21,6 +21,9 @@ export const userSlice = createSlice({
         userLogin: (state, action) => {
             state.currentUser = action.payload;
         },
+        userLogout: (state) => {
+            state.currentUser = {}
+        }
     },
     extraReducers: {
         [fetchUsersAsync.pending]: (state) => {
@@ -40,6 +43,6 @@ export const userSlice = createSlice({
 export const usersSelector = (state) => state.users.users;
 export const currentUserSelector = (state) => state.users.currentUser;
 
-export const { userLogin } = userSlice.actions;
+export const { userLogin, userLogout } = userSlice.actions;
 
 export default userSlice.reducer;
