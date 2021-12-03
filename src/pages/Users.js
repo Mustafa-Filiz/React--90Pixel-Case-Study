@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import {
     currentUserSelector,
+    fetchUsersAsync,
     userLogout,
     usersSelector,
 } from '../redux/userSlice';
+import axios from 'axios';
 
 function Users() {
     const users = useSelector(usersSelector);
@@ -20,6 +22,13 @@ function Users() {
         dispatch(userLogout());
         navigate('/');
     };
+
+    const handleDelete = (id) => {
+        axios.delete(`${process.env.REACT_APP_USERS_API_URL}/${id}`)
+        dispatch(fetchUsersAsync())
+    }
+
+    console.log(users)
 
     return (
         <div>
@@ -38,7 +47,7 @@ function Users() {
                     <List.Item
                         actions={[
                             <Link to={`${user.id}`}>more</Link>,
-                            <Button type="text" danger>
+                            <Button type="text" danger onClick={() => handleDelete(user.id)}>
                                 delete
                             </Button>
                         ]}
