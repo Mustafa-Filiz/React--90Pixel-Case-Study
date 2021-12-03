@@ -17,7 +17,6 @@ function Login() {
     const onFinish = (values) => {
         const { email, password } = values;
         const user = users.find((user) => email === user.email.toLowerCase());
-        // console.log(user)
         if (user) {
             if (
                 user.email.toLowerCase() === email &&
@@ -32,8 +31,6 @@ function Login() {
             alert("User couldn't find.");
         }
     };
-
-    console.log(users);
 
     return (
         <div>
