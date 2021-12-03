@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Input, Checkbox, Button } from 'antd';
-import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -38,11 +38,8 @@ function Signup() {
     const dispatch = useDispatch();
 
     const onFinish = (values) => {
-        const { email, password } = values;
-        const user = { email, password };
-        // console.log('Received values of form: ', values);
-        axios.post(process.env.REACT_APP_USERS_API_URL, user);
-        dispatch(userLogin(user));
+        axios.post(process.env.REACT_APP_USERS_API_URL, values);
+        dispatch(userLogin(values));
         navigate('/users');
     };
     return (
@@ -57,6 +54,17 @@ function Signup() {
                 className="sign-up-form"
                 size="large"
             >
+                <Form.Item
+                    name="name"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please input your Username!',
+                        },
+                    ]}
+                >
+                    <Input prefix={<UserOutlined />} placeholder="Username" />
+                </Form.Item>
                 <Form.Item
                     name="email"
                     rules={[
