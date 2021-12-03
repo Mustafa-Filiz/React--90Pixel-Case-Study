@@ -4,7 +4,8 @@ import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { userLogin } from '../redux/userSlice';
+import { userLogin, usersSelector } from '../redux/userSlice';
+import { useSelector } from 'react-redux';
 
 const formItemLayout = {
     wrapperCol: {
@@ -37,10 +38,19 @@ function Signup() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const users = useSelector(usersSelector);
+
     const onFinish = (values) => {
-        axios.post(process.env.REACT_APP_USERS_API_URL, values);
-        dispatch(userLogin(values));
-        navigate('/users');
+        const existingEmail = users.find((user) => user.email === values.email);
+        const existingUsername = users.find((user) => user.name === values.name);
+        
+        if (!existingEmail && !existingUsername) {
+            axios.post(process.env.REACT_APP_USERS_API_URL, values);
+            dispatch(userLogin(values));
+            navigate('/users');
+        } else {
+            alert('Username or email exists.');
+        }
     };
     return (
         <div>
