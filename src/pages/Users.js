@@ -40,7 +40,7 @@ function Users() {
                             <Link to={`${user.id}`}>more</Link>,
                             <Button type="text" danger>
                                 delete
-                            </Button>,
+                            </Button>
                         ]}
                     >
                         <List.Item.Meta
