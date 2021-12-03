@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import {
     currentUserSelector,
-    fetchUsersAsync,
     userLogout,
     usersSelector,
 } from '../redux/userSlice';
@@ -25,7 +24,6 @@ function Users() {
 
     const handleDelete = (id) => {
         axios.delete(`${process.env.REACT_APP_USERS_API_URL}/${id}`)
-        dispatch(fetchUsersAsync())
     }
 
     console.log(users)
